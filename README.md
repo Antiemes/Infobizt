@@ -1,0 +1,2 @@
+# Infobizt
+Információs rendszerek biztonságtechnikája
