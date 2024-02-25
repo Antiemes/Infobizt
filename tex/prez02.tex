@@ -42,7 +42,7 @@
 \usepackage{amsthm}				% For theorem environment
 \usepackage{multirow}			% For multi row cells in table
 \usepackage{arydshln} 			% For dashed lines in arrays and tables
-usepackage{tikzfeynman}		% For Feynman diagrams
+\usepackage{tikzfeynman}		% For Feynman diagrams
 % \usepackage{subfig}           % for sub figures
 % \usepackage{young}			% For Young Tableaux
 % \usepackage{xspace}			% For spacing after commands
@@ -1121,10 +1121,17 @@ Scale = 1
 %  \begin{center}
 %    \begin{tikzpicture}
 %      \node[draw,rectangle] (e) {$E$};
-%      \node[draw,rectangle,above = of e] (iv) {$IV$};
-%      \draw[->] (iv)--(e);
+%      \node[above = of e] (iv) {$IV$};
+%      \draw[->,thick] (iv)--(e);
 %
-%      \node[draw,]
+%      \node[draw,circle,below = of e] (xor) {+};
+%      \draw[->,thick] (e)--(xor);
+%      
+%      \node[circle,fill=black,inner sep=0pt,minimum size=3pt] (dot) at ($(e)!0.5!(xor)$) {};
+%      \node[right = of e] (dot2) {};
+%      \draw[thick] (dot)-|(dot2);
+%      \draw[->,thick] (dot)--(e);
+%
 %    \end{tikzpicture}
 %  \end{center}
 \end{frame}
