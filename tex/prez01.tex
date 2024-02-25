@@ -1,0 +1,412 @@
+\documentclass[12 pt]{beamer}
+\usetheme[
+	bullet=circle,		% Other option: square
+	bigpagenumber,		% circled page number on lower right
+	topline=true,			% colored bar at the top of the frame 
+	shadow=false,			% Shading for beamer blocks
+	watermark=BG_lower,	% png file for the watermark
+	]{Flip}
+
+
+\newcommand{\titleimage}{title}			% Custom title 
+\newcommand{\tanedo}{tanedolight}		% Custom author name
+\newcommand{\CMSSMDM}{CMSSMDMlight.png}	% light background plot
+
+
+%%%%%%%%%%
+% FONTS %
+%%%%%%%%%%
+
+\usepackage[T1]{fontenc}
+%\usepackage{lmodern}		
+%\usepackage{sfmath}		% Sans Serif Math, off by default
+
+%% Protects fonts from Beamer screwing with them
+%% http://tex.stackexchange.com/questions/10488/force-computer-modern-in-math-mode
+\usefonttheme{professionalfonts}
+
+
+\usepackage[no-math]{fontspec}		
+
+%\defaultfontfeatures{Mapping=tex-text}	% This seems to be important for mapping glyphs properly
+
+\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+\usepackage{mathspec}
+\usepackage{graphicx}
+%\usepackage{mathrsfs} 			% For Weinberg-esque letters
+\usepackage{cancel}				% For "SUSY-breaking" symbol
+\usepackage{slashed}            % for slashed characters in math mode
+%\usepackage{bbm}                % for \mathbbm{1} (unit matrix)
+\usepackage{amsthm}				% For theorem environment
+\usepackage{multirow}			% For multi row cells in table
+\usepackage{arydshln} 			% For dashed lines in arrays and tables
+\usepackage{tikzfeynman}		% For Feynman diagrams
+% \usepackage{subfig}           % for sub figures
+% \usepackage{young}			% For Young Tableaux
+% \usepackage{xspace}			% For spacing after commands
+% \usepackage{wrapfig}			% for Text wrap around figures
+% \usepackage{framed}
+
+\setsansfont{calibri}[ 
+Extension = .ttf,
+UprightFont = *,
+BoldFont = *b,
+ItalicFont = *i,
+Scale = 1
+]
+
+\setmathfont(Digits,Latin,Greek){SitkaI.ttc}
+
+\graphicspath{{images/}}	% Put all images in this directory. Avoids clutter.
+
+
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{mindmap,trees}	% For mind map
+% http://www.texample.net/tikz/examples/computer-science-mindmap/
+
+
+% SOME COMMANDS THAT I FIND HANDY
+% \renewcommand{\tilde}{\widetilde} % dinky tildes look silly, dosn't work with fontspec
+\newcommand{\comment}[1]{\textcolor{comment}{\footnotesize{#1}\normalsize}} % comment mild
+\newcommand{\Comment}[1]{\textcolor{Comment}{\footnotesize{#1}\normalsize}} % comment bold
+\newcommand{\COMMENT}[1]{\textcolor{COMMENT}{\footnotesize{#1}\normalsize}} % comment crazy bold
+\newcommand{\Alert}[1]{\textcolor{Alert}{#1}} % louder alert
+\newcommand{\ALERT}[1]{\textcolor{ALERT}{#1}} % loudest alert
+%% "\alert" is already a beamer pre-defined
+
+
+
+\author{}
+\title{Informatikai Rendszerek Biztonságtechnikája}
+\institute{}
+\date{}
+
+
+
+\begin{document}
+
+%% To use external nodes; http://www.texample.net/tikz/examples/beamer-arrows/
+\tikzstyle{every picture}+=[remember picture]
+
+{
+\setbeamertemplate{sidebar right}{\llap{\includegraphics[width=\paperwidth,height=\paperheight]{backgnd}}}
+
+\begin{frame}[c]
+\begin{center}
+	% \includegraphics[width=7cm]{WarpedPenguinsReturn}
+
+  \Large
+  \textbf{Információs rendszerek}
+
+  \textbf{biztonságtechnikája}
+
+  \qquad
+  
+  Bevezetés
+  
+  \qquad
+
+  \textit{Vakulya Gergely}
+
+
+
+	%\begin{tikzpicture}%[show background grid] %% Use grid for positioning, then turn off
+	%	\node[inner sep=0pt,above right] (title) 
+	%		{ \includegraphics[width=7cm]{\titleimage} };
+	%	% \node (title) at (1.5,1.5) {};
+	%\end{tikzpicture}
+	%\quad
+
+	% \includegraphics[width=7cm]{\titleimage} 
+	
+	%\vspace{1em}
+	%\footnotesize\textcolor{gray}{Journal of Cool Beans
+	%\texttt{[arXiv:1234.5678]}}
+	%\vspace{.5em}
+	
+	%\includegraphics[height=1.5cm]{\tanedo} \quad
+	 % {\fontspec{Zapfino} Flip Tanedo} \quad
+	% \includegraphics[height=1cm]{FlipSansSerif} \quad
+	%\includegraphics[height=1.5cm]{CUasym}\\
+	% \footnotesize\textcolor{gray}{In collaboration with} Csaba Cs\'aki\textcolor{gray}{,} Yuval Grossman\textcolor{gray}{, and} Yuhsin Tsai\normalsize\\
+	%	\footnotesize\textcolor{gray}{In collaboration with 
+%		D. Grayson, J. Todd, T. Drake, S. Brown, D. Wayne}\normalsize\\
+%	\textcolor{normal text.fg!50!Comment}{\textit{Gotham University}, \today}
+	% \textcolor{Comment}{ \;($\pi$ day)}\\
+	% \Comment{4 February 2011}
+\end{center}
+\end{frame}
+}
+
+%------------------------------------------------
+
+%\setbeamertemplate{default}{}
+
+\begin{frame}{Követelmények}
+
+  \begin{block}{2 db ZH}
+    \begin{itemize}
+        \item{6. hét (március 19.)}
+        \item{13. hét (május 7.)}
+        \item{Kb. 60 perces feladatsor.}
+        \item{Pótlási lehetőség: 14. hét (május 14.)}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Beszámoló}
+    \begin{itemize}
+      \item{Rövid prezentáció önállóan feldolgozott informatikai biztonsági témából}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Elmaradó órák}
+    \begin{itemize}
+      \item{Március 26. (kari tavaszi túra)}
+      \item{Április 2. (rektori szünet)}
+      \item{Április 9. (atomerőmű látogatás)}
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Érintett témák}
+  \begin{block}{Kriptográfia}
+    \begin{itemize}
+      \item{Szimmetrikus kulcsú algoritmusok}
+      \item{Nyilvános kulcsú algoritmusok}
+      \item{Üzenet pecsét algoritmusok}
+      \item{Digitális aláírás}
+      \item{Titkosított adattárolás}
+      \item{Titkosított kommunikáció}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Sebezhetőségek}
+    \begin{itemize}
+      \item{Sebezhetőségek típusai}
+      \item{Konkrét példák}
+      \item{CVE adatbázis}
+      \item{Védekezési lehetőségek}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{A kriptográfia előzményei}
+  \begin{itemize}
+    \item{Motiváció}
+      \begin{itemize}
+        \item{Üzenetek átvitele nem biztonságos csatornán}
+          \begin{itemize}
+            \item{Kommunikáció háborús körülmények között}
+            \item{Magánjellegű kommunikáció (szerelmes levelek...)}
+          \end{itemize}
+        \item{Üzenetek elrejtése mindenki más elől}
+          \begin{itemize}
+            \item{Titkos napló}
+          \end{itemize}
+      \end{itemize}
+
+    \item{Megoldási lehetőségek}
+      \begin{itemize}
+        \item{Lakattal lezárt tároló}
+        \item{Lepecsételt boríték}
+        \item{\textbf{Szteganográfia}}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Szteganográfia a kezdetekben}
+  \begin{itemize}
+    \item{Jelentése: leplezni (ógörög eredetű)}
+    \item{Az információt nem rejtjelezzük, hanem elrejtik egy szokványos adathalmazban, amire senki sem figyel.}
+    \item{Az adat elrejtése az adatban}
+    \item{Az ókortól kezdve alkalmazzák}
+  \end{itemize}
+
+  \begin{block}{Kínai módszer}
+    A hírvivő lenyelte a gombócba gyúrt, viaszba mártott levelet.
+  \end{block}
+
+  \begin{block}{Rabszolga fejére írt szöveg}
+    A rabszolga fejét kopaszta borotválták és arra írták a szöveget. Amikor a haja kinőtt, elküldték a címzetthez, ahol újra leborotválták a haját.
+  \end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Szteganográfia a kezdetekben}
+
+  \begin{block}{Viasztáblás módszer}
+    A viasztábláról lekaparták a viaszt és a csupasz deszkára vésték a szöveget. Ezután visszahelyezték a viaszt.
+  \end{block}
+
+  \begin{block}{Dupla levél}
+    A hírvivő egy állevelet visz, de van nála (elrejtve, pl. lábbelibe varrva) egy másik levél is.
+  \end{block}
+
+  \begin{block}{Halhólyag}
+    A felfújt hólyagra írják az üzenetet, amit aztán leeresztenek. Elolvasáskor újra fel kell fújni.
+  \end{block}
+
+  \begin{block}{Láthatatlan tinta}
+    A klasszikus módszer. Régóta ismertek hozzá megfelelő anyagok.
+  \end{block}
+  
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Versbe szedett üzenet}
+  \begin{block}{Gárdonyi Géza: Egy magyar rab levele}
+
+\centering
+,,Kedves ezüstös, drága dádém!
+Ezer nemes arany tizedét örömmel ropogtasd
+örök keserűség keservét ivó magzatodért.
+Egészségem gyöngy. A vaj árt. Ritkán óhajtom
+sóval, borssal. Ócska lepedőben szárítkozom
+álmomban, zivataros estén. Matyi
+bátyám, egypár rózsát, rezet, ezüstöt, libát
+egy lapos leveleddel eressze hajlékomba.
+Erzsi, tűt, faggyút, ollót, gombot, levendulát adj!
+Laci, nefelejts!
+
+\qquad
+
+\flushright Imre''
+  \end{block}
+
+
+Próbáljuk meg megfejteni!
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Modern kori szteganográfia}
+  Általában egy fájlban rejtenek el egy másik fájlt.
+
+  \begin{block}{Camouflage}
+    A Camouflage egy olyan program, amivel bármilyen fájlt például képfájlba, vagy Word dokumentumba lehet rejteni. Zeneszámok terjesztésére használták.
+  \end{block}
+
+  \begin{block}{Kép a képben}
+    Különböző megoldások, amikkel egy kép pixeleinek minimális módosításával rejthetőek el adatok. Inkább érdekesség.
+  \end{block}
+
+\end{frame}
+
+
+%------------------------------------------------
+
+\begin{frame}{A kriptográfia múltja}
+  \begin{block}{A szó eredete}
+    \begin{itemize}
+      \item{Szintén ógörög}
+      \item{\textit{kryptós}: rejtett}
+      \item{\textit{gráphein}: írni}
+      \item{\textbf{titkosírás}}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Alapfogalmak}
+    \begin{itemize}
+      \item{Kriptográfia: információrejtés, rejtjelezés}
+      \item{Kriptoanalízis: visszafejtés}
+      \item{Kriptológia: Mind a kriptográfiát, mind a kriptoanalízist magában foglaló tudomány}
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Ókor}
+  \begin{block}{Spártai bőrszíj}
+    \begin{itemize}
+      \item{Egy bőrszíjat egy megadott átmérőjű hengerre tekerték fel.}
+      \item{A henger alkotói mentén írták fel a szöveget.}
+      \item{A letekert szíjon a betűk sorrendje összekeveredett.}
+      \item{A dekódoláshoz egy azonos átmérűjű henger kellett.}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Caesar-kód}
+    \begin{itemize}
+      \item{Minden betű helyett az ABC-ben 3-mal odébb levő betűt írták.}
+      \item{Általánosított Caesar-kód: 3 helyett $k$ hellyel odébb csúsztatták az ABC-t.}
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Egyéb módszerek}
+  \begin{block}{Rejtjel-rács}
+    \begin{itemize}
+      \item{Egy négyzet alakú rácsot használnak, amin kivágások vannak.}
+      \item{A kilátszó betűket kell felülről lefelé olvasni.}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Egybetű-helyettesítés}
+    \begin{itemize}
+      \item{Minden betűt egy másiknak feleltetnek meg az ABC-ben.}
+      \item{A Caesar-kód egy speciális Egybetű-helyettesítés.}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Kódkönyv}
+    \begin{itemize}
+      \item{Az elküldött számok egy könyv oldalainak, szavainak felelnek meg.}
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Kriptoanalízis}
+  \begin{block}{Egybetű-helyettesítéses kódolók}
+    \begin{itemize}
+      \item{Egy $n$ betűs ABC esetében $n!$ féle egybetű-helyettesítés készíthető.}
+      \item{A nyers erő módszerével a próbálkozás elvileg reménytelen.}
+      \item{Megoldás: A természetes nyelvek statisztikai tulajdonságai. Gyakoriság-elemzés. Betűpárok, betűhármasok keresése.}
+    \end{itemize}
+  \end{block}
+
+  \begin{exampleblock}{Próbáljuk meg megfejteni}
+   í iak üökoíhaúú pu ub í iak pmvbznwom í euibg ibíodwíh í iak őíkdk íz akmo hézemkmp b íz mpámr iakcí m hézeab píví 
+    %a cél voltaképp mi is a cél megszűnte a dicső csatának a cél halál az élet küzdelem s az ember célja e küzdés maga
+    %sed 'y/aábcdeéfghiíjklmnoóöőpqrstuúüűvwxy/ídáiemayvőuschkpwöfűgútrboxqénüójl/'
+  \end{exampleblock}
+\end{frame}
+
+%------------------------------------------------
+
+\end{document}
+
+
+%db={}
+%szoveg="í iak üökoíhaúú pu ub í iak pmvbznwom í euibg ibíodwíh í iak őíkdk íz akmo hézemkmp b íz mpámr iakcí m hézeab píví"
+%for element in szoveg:
+%  try:
+%    db[element] += 1
+%  except KeyError:
+%    db[element] = 1
+%
+%for element in db:
+%  print(element, db[element])
+%
+%szoveg = szoveg.replace("í", "A")
+%print(szoveg)
