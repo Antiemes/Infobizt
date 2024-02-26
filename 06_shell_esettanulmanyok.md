@@ -46,3 +46,7 @@ cp bableves.txt otlet.txt
 
 Ami kérdés nélkül felülírja a második fájlt.
 
+## A PATH változó
+
+## Véletlen rm -r
+
