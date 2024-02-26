@@ -1118,22 +1118,57 @@ Scale = 1
     \item{A tulajdonképpeni titkosítás itt is kizáró vagy művelettel történik a nyílt szöveg és a kulcsfolyam között.}
   \end{itemize}
 
-%  \begin{center}
-%    \begin{tikzpicture}
-%      \node[draw,rectangle] (e) {$E$};
-%      \node[above = of e] (iv) {$IV$};
-%      \draw[->,thick] (iv)--(e);
-%
-%      \node[draw,circle,below = of e] (xor) {+};
-%      \draw[->,thick] (e)--(xor);
-%      
-%      \node[circle,fill=black,inner sep=0pt,minimum size=3pt] (dot) at ($(e)!0.5!(xor)$) {};
-%      \node[right = of e] (dot2) {};
-%      \draw[thick] (dot)-|(dot2);
-%      \draw[->,thick] (dot)--(e);
-%
-%    \end{tikzpicture}
-%  \end{center}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[draw,rectangle] (e) {$E$};
+      \node[above = .5 cm of e] (iv) {$IV$};
+      \draw[->,thick] (iv)--(e);
+
+      \node[draw,circle,below = of e] (xor) {+};
+      \draw[->,thick] (e)--(xor);
+      
+      \node[circle,fill=black,inner sep=0pt,minimum size=3pt] (dot) at ($(e)!0.5!(xor)$) {};
+      \node[right = of e] (dot2) {};
+      \draw[thick] (dot)-|(dot2.center);
+      \draw[->,thick] (dot2.center)--(e);
+
+      \node[left = of e] (k) {$K$};
+      \draw[->,thick] (k)--(e);
+
+      \node[left = of xor] (p) {$P$};
+      \draw[->,thick] (p)--(xor);
+
+      \node[right = of xor] (c) {$C$};
+      \draw[->,thick] (xor)--(c);
+      
+      \node[above,font=\large\bfseries] at (current bounding box.north) {A titkosítás menete};
+    \end{tikzpicture}
+    \begin{tikzpicture}
+      \node[draw,rectangle] (e) {$E$};
+      \node[above = .5 cm of e] (iv) {$IV$};
+      \draw[->,thick] (iv)--(e);
+
+      \node[draw,circle,below = of e] (xor) {+};
+      \draw[->,thick] (e)--(xor);
+      
+      \node[circle,fill=black,inner sep=0pt,minimum size=3pt] (dot) at ($(e)!0.5!(xor)$) {};
+      \node[right = of e] (dot2) {};
+      \draw[thick] (dot)-|(dot2.center);
+      \draw[->,thick] (dot2.center)--(e);
+
+      \node[left = of e] (k) {$K$};
+      \draw[->,thick] (k)--(e);
+
+      \node[left = of xor] (c) {$C$};
+      \draw[->,thick] (c)--(xor);
+
+      \node[right = of xor] (p) {$P$};
+      \draw[->,thick] (xor)--(p);
+      
+      \node[above,font=\large\bfseries] at (current bounding box.north) {A visszafejtés menete};
+
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Számláló (CTR) mód}
@@ -1149,6 +1184,46 @@ Scale = 1
     \item{Mind az adó, mind a vevő oldalon ugyanazt az inicializáló vektort használjuk.}
   \end{itemize}
 
+  \begin{center}
+    \begin{tikzpicture}%[transform canvas={scale=0.6}]
+      \node[draw,rectangle] (e) {$E$};
+      \node[above = .3 cm of e] (iv) {$IV + n$};
+      \draw[->,thick] (iv)--(e);
+
+      \node[draw,circle,below = .3 cm of e] (xor) {+};
+      \draw[->,thick] (e)--(xor);
+      
+      \node[left = of e] (k) {$K$};
+      \draw[->,thick] (k)--(e);
+
+      \node[left = of xor] (p) {$P_n$};
+      \draw[->,thick] (p)--(xor);
+
+      \node[right = of xor] (c) {$C_n$};
+      \draw[->,thick] (xor)--(c);
+      
+      \node[above,font=\bfseries] at (current bounding box.north) {A titkosítás menete};
+    \end{tikzpicture}
+    \begin{tikzpicture}%[transform canvas={scale=0.6}]
+      \node[draw,rectangle] (e) {$E$};
+      \node[above = .3 cm of e] (iv) {$IV + n$};
+      \draw[->,thick] (iv)--(e);
+
+      \node[draw,circle,below = .3 cm of e] (xor) {+};
+      \draw[->,thick] (e)--(xor);
+      
+      \node[left = of e] (k) {$K$};
+      \draw[->,thick] (k)--(e);
+
+      \node[left = of xor] (c) {$C_n$};
+      \draw[->,thick] (c)--(xor);
+
+      \node[right = of xor] (p) {$P_n$};
+      \draw[->,thick] (xor)--(p);
+      
+      \node[above,font=\bfseries] at (current bounding box.north) {A visszafejtés menete};
+    \end{tikzpicture}
+  \end{center}
 
 \end{frame}
 
