@@ -158,3 +158,35 @@ a kiírás is a mi kényelmünket szolgálja.
 Végül végig iterálunk a lekérdezés eredményének sorain és kiírjuk a
 `nev`, `targy` és `jegy` mezőket.
 
+## Támasási formák
+
+### A támadás alapja
+
+A kódban, bár úgy tűnik, hogy a `nev` változóval egy egyszerű összehasonlítás történik,
+valójában a stringet záró `'` jelet maga a változó is tartalmazhatja. Így például a
+
+```
+Nagy Pal
+```
+
+helyett ugyanezt az eredményt adja a következő is:
+
+```
+Nagy Pal' -- itt pedig akarmi lehet
+```
+
+Itt a bevitt adat tartalmazza a lezáró `'` jelet, a -- pedig SQL-ben egy komment.
+
+### A feltétel ignorálása
+
+Így tehát tetszőlegesen kiegészíthetjük az SQL mondatot. Például:
+
+```
+Nagy Pal' OR 1=1 -- 
+```
+
+Ügyeljünk a `--` utáni kötelező szóközre!
+
+Ez a bemenet ignorálja az eredeti lekérdezésben levő feltételt és minden sort kiír.
+
+
