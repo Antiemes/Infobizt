@@ -10,7 +10,7 @@ DOCKERIMAGE = antiemes/latex
 
 #all: $(MAINDOCUMENT).tex $(MAINDOCUMENT).bbl $(FIGURES)
 
-all: prez01.pdf prez02.pdf prez03.pdf prez04.pdf
+all: prez01.pdf prez02.pdf prez03.pdf prez04.pdf prez05.pdf
 
 %.pdf: %.tex
 	$(TEX) $<
