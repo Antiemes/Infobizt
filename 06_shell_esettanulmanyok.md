@@ -48,5 +48,49 @@ Ami kérdés nélkül felülírja a második fájlt.
 
 ## A PATH változó
 
+Linux (és egyéb Unix-like rendszerek) alatt egy végrehajtható fájlt annak nevével akkor
+tudunk futtatni, ha az azt tartalmazó könyvtár szerepel a `PATH` környezeti változóban.
+Például a gyakran használt `ls` parancs vagy a `/bin`, vagy a `/usr/bin` könyvtárban van. A
+`PATH mindkettőt tartalmazza. Erről a következő paranccsal tudunk meggyőződni:
+
+```bash
+echo $PATH
+```
+
+Itt az egyes könyvtárak `:` jellel vannak elválasztva.
+
+A `PATH`-ben nem szereplő program futtatása az elérési útjával lehetséges. Az aktuális könyvtárban
+levő `valami` nevű fájl futtatása az aktuális könyvtárból:
+
+```bash
+./valami
+```
+
+Ez egy apró kellemetlenség. Mi lenne, ha például betennénk az aktuális könyvárat is a `PATH`-ba?
+A lista végére fűzhetjük:
+
+```bash
+export PATH=$PATH:"."
+```
+
+Vagy a lista elejéhez:
+
+```bash
+export PATH=".":$PATH
+```
+
+Ekkor az elérési út része lenne az aktuális könyvtár is, így a futtatható fájlok elérése az
+elérési út beírása nélkül is működni fog.
+
+De mi van akkor, ha egy támadó mondjuk egy `ls` nevű rosszindulatú programot helyez el egy olyan
+könyvtárban, amire van írási joga és potenciálisan kiadhatjuk ott az `ls` parancsot? (Például
+a `/tmp`-ben.) Ekkor, ha az aktuális könyvtárat a `PATH` elejére tettük, a támadó `ls`
+programja fog elindulni. Az önmagában nem ad kellő védelmet, ha nem a `PATH` elejéhez,
+hanem a végéhez adjuk hozzá az aktuális könyvtárat, hiszen például egy elgépelt parancs
+beírása (amilyen nevűt a támadó a megfelelő könyvtárban elhelyezett) nem várt
+következménnyel járhat.
+
+Ez az oka annak, hogy a `PATH`-hez soha nincs hozzáadva az aktuális könyvtár.
+
 ## Véletlen rm -r
 
