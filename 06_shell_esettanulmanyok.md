@@ -94,3 +94,12 @@ Ez az oka annak, hogy a `PATH`-hez soha nincs hozzáadva az aktuális könyvtár
 
 ## Véletlen rm -r
 
+Tegyük fel, hogy olyan programot készítünk, ami valamilyen változóban adott könyvtárban
+levő összes tartalmat törli. Mondjuk legyen az alábbi a program kérdéses sora:
+
+```bash
+rm -rf $DIR/*
+```
+
+Amennyiben a `DIR` változó üres, úgy az `rm -rf /*` parancs fut le.
+
