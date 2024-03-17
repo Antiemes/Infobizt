@@ -1,0 +1,249 @@
+\documentclass[12 pt]{beamer}
+\usetheme[
+  bullet=circle,		% Other option: square
+  bigpagenumber,		% circled page number on lower right
+  topline=true,			% colored bar at the top of the frame 
+  shadow=false,			% Shading for beamer blocks
+  watermark=BG_lower,	% png file for the watermark
+]{Flip}
+
+
+\newcommand{\titleimage}{title}			% Custom title 
+\newcommand{\tanedo}{tanedolight}		% Custom author name
+\newcommand{\CMSSMDM}{CMSSMDMlight.png}	% light background plot
+
+
+%%%%%%%%%%
+% FONTS %
+%%%%%%%%%%
+
+\usepackage[T1]{fontenc}
+%\usepackage{lmodern}		
+%\usepackage{sfmath}		% Sans Serif Math, off by default
+
+%% Protects fonts from Beamer screwing with them
+%% http://tex.stackexchange.com/questions/10488/force-computer-modern-in-math-mode
+\usefonttheme{professionalfonts}
+
+
+\usepackage[no-math]{fontspec}		
+
+%\defaultfontfeatures{Mapping=tex-text}	% This seems to be important for mapping glyphs properly
+
+\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+\usepackage{mathspec}
+\usepackage{graphicx}
+%\usepackage{mathrsfs} 			% For Weinberg-esque letters
+\usepackage{cancel}				% For "SUSY-breaking" symbol
+\usepackage{slashed}            % for slashed characters in math mode
+%\usepackage{bbm}                % for \mathbbm{1} (unit matrix)
+\usepackage{amsthm}				% For theorem environment
+\usepackage{multirow}			% For multi row cells in table
+\usepackage{arydshln} 			% For dashed lines in arrays and tables
+\usepackage{tikzfeynman}		% For Feynman diagrams
+% \usepackage{subfig}           % for sub figures
+% \usepackage{young}			% For Young Tableaux
+% \usepackage{xspace}			% For spacing after commands
+% \usepackage{wrapfig}			% for Text wrap around figures
+% \usepackage{framed}
+
+\usepackage{setspace}
+
+\setsansfont{calibri}[ 
+Extension = .ttf,
+UprightFont = *,
+BoldFont = *b,
+ItalicFont = *i,
+Scale = 1
+]
+
+\setmathfont(Digits,Latin,Greek){SitkaI.ttc}
+
+\graphicspath{{images/}}	% Put all images in this directory. Avoids clutter.
+
+
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{mindmap,trees}	% For mind map
+\usetikzlibrary{arrows,positioning,calc}
+\usetikzlibrary{shapes}
+% http://www.texample.net/tikz/examples/computer-science-mindmap/
+
+
+% SOME COMMANDS THAT I FIND HANDY
+% \renewcommand{\tilde}{\widetilde} % dinky tildes look silly, dosn't work with fontspec
+\newcommand{\comment}[1]{\textcolor{comment}{\footnotesize{#1}\normalsize}} % comment mild
+\newcommand{\Comment}[1]{\textcolor{Comment}{\footnotesize{#1}\normalsize}} % comment bold
+\newcommand{\COMMENT}[1]{\textcolor{COMMENT}{\footnotesize{#1}\normalsize}} % comment crazy bold
+\newcommand{\Alert}[1]{\textcolor{Alert}{#1}} % louder alert
+\newcommand{\ALERT}[1]{\textcolor{ALERT}{#1}} % loudest alert
+%% "\alert" is already a beamer pre-defined
+
+
+
+\author{}
+\title{Informatikai Rendszerek Biztonságtechnikája}
+\institute{}
+\date{}
+
+
+
+\begin{document}
+
+%% To use external nodes; http://www.texample.net/tikz/examples/beamer-arrows/
+\tikzstyle{every picture}+=[remember picture]
+
+{
+  \setbeamertemplate{sidebar right}{\llap{\includegraphics[width=\paperwidth,height=\paperheight]{backgnd}}}
+
+  \begin{frame}[c]
+    \begin{center}
+      % \includegraphics[width=7cm]{WarpedPenguinsReturn}
+
+      \Large
+      \textbf{Információs rendszerek}
+
+      \textbf{biztonságtechnikája}
+
+      \qquad
+
+      Sebezhetőségek
+
+      \qquad
+
+      \textit{Vakulya Gergely}
+
+    \end{center}
+  \end{frame}
+}
+
+  %------------------------------------------------
+
+\begin{frame}{A sebezhetőségek}
+  \begin{itemize}
+    \item{A sebezhetőség bizonyos rendszerek, szoftverek gyengesége, amit egy támadó a saját céljaira, illetve károkozásra tud kihasználni.}
+    \item{A sebezhetőséget kihasználó szoftver az exploit.}
+    \item{A következők időbeli alakulása lényegében tetszőlegesen alakulhat:}
+      \begin{itemize}
+        \item{A sebezhetőségek fennállásának időintervalluma}
+        \item{Azok felfedezése}
+        \item{A javítások elkészítése (a sebezhetőség befoltozása)}
+        \item{A sebezhető rendszerek tényleges javítása}
+        \item{A sebezhetőség nyilvánosságra hozása}
+        \item{A sebezhetőség ismert, vagy feltételezett kihasználása}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{A CVE adatbázis}
+  \begin{itemize}
+    \item{CVE: Common Vulnerabilities and Exposures}
+    \item{Nyilvános sérülékenység-adatbázis.}
+    \item{A publikált sérülékenységek egy CVE számot kapnak, amiről egyértelműen be lehet őket azonosítani (emellett lehet fantázianevük is).}
+    \item{Legfontosabb információk:}
+      \begin{itemize}
+        \item{Milyen szoftvert (vagy egyéb rendszert érint)}
+        \item{Milyen verziókat érint}
+        \item{Rögzítés dátuma}
+        \item{Leírás (működési mechanizmus)}
+        \item{Referenciák (például az egyes szállítók információihoz)}
+      \end{itemize}
+        \item{Több gyűjtőoldal:}
+          \begin{itemize}
+            \item{\href{https://cve.mitre.org}{https://cve.mitre.org}}
+            \item{\href{https://www.cvedetails.com}{https://www.cvedetails.com}}
+            \item{\href{https://www.cve.org/}{https://www.cve.org/}}
+            \item{\href{https://nvd.nist.gov}{https://nvd.nist.gov}}
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{A sebezhetőségek fő típusai}
+  \begin{itemize}
+    \item{Kódfuttatás (\textbf{code execution}): A támadó (esetenként tetszőleges) kódot képes futtatni a sebezhető rendszeren.}
+    \item{Védelem, vagy ellenőrzés megkerülése (\textbf{bypass}): A támadó valamilyen ellenőrzés kihagyására képes a sebezhető rendszert késztetni.}
+    \item{Privilégiumszint emelés (\textbf{privilege escalation}): A támadó egy számára nem biztosított privilégiumhoz (például root joghoz) jut.}
+    \item{Szolgáltatásmegtagadás (\textbf{denial of service, DoS}): A támadó a rendszer szolgáltatásait leállítja, lelassítja, vagy azokat valamilyen módon akadályozza.}
+    \item{Adatszivárgás (\textbf{information leak}): A támadó számára nem nyilvános adatokhoz jut.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Támadási mechanizmusok}
+  \begin{itemize}
+    \item{Puffertúlcsordulásos támadás (buffer overflow, stack buffer overflow)}
+    \item{SQL-injektálás (SQL injection, SQLi)}
+    \item{Cross-side scripting, XSS}
+    \item{Kéréshamisítás (Cross-site request forgery, CSRF vagy XSRF)}
+    \item{Versenyhelyzet (Race condition)}
+    \item{Sidechannel attack}
+    \item{Memory corruption}
+    \item{Bemenet ellenőrzés (Input validation)}
+    \item{Kriptográfiai támadások}
+  \end{itemize}
+
+  \qquad
+
+  Ezek kombinációi is gyakoriak.
+\end{frame}
+
+\begin{frame}{CVE-2019-18634, sudo pwfeedback exploit (Linux és egyéb rendszerek)}
+  \begin{itemize}
+    \item{A sudo 1.7.1 (2009-04-11) és 1.8.26 (2018-11-13) verziói között.}
+    \item{A \texttt{sudo} parancs a jelszó bekérésekor nem ad kimenetet.}
+    \item{Azonban beállíthatjuk, hogy a jelszó begépelése közben csillagok jelenjenek meg.}
+    \item{Ha ez a beállítás fennáll, megfelelően összeállított bemenet beírásával a támadó root jogosultsághoz juthat.}
+    \item{Típus: Helyi privilégiumszint növelés (local root).}
+    \item{Mechanizmus: Stack buffer overflow.}
+    \item{Megjegyzés: A `sudo` root joggal fut.}
+  \end{itemize}
+\end{frame}
+
+%\begin{frame}{CVE-2021-3156, sudo}
+%\end{frame}
+
+\begin{frame}{CVE-2016-5195, Dirty COW (Linux)}
+  \begin{itemize}
+    \item{Linux kernel, 2.x-4.x, a 4.8.3 előtt.}
+    \item{COW jelentése: Copy On Write}
+    \item{Versenyhelyzet (race condition) alapú sebezhetőség.}
+    \item{A kihasználásával a támadó egy olyan, a root tulajdonában levő fájlt tud írni, amire csak olvasási joga van.}
+      \begin{itemize}
+        \item{Átírhat konfigurációs fájlokat, például jogosultságokat adva magának.}
+        \item{Backdoort helyezhet el valamelyik setuid root-os programban.}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{A Dirty COW működése}
+  \begin{itemize}
+    \item{Unix alatt ,,minden file''. A \texttt{/proc} alatt például virtuális fájlok vannak. A \texttt{/proc/self/mem} az aktuális folyamat memóriájának leképezése.}
+    \item{\texttt{mmap()} függvény: Egy fájlt a memóriára képez le.}
+    \item{Saját COW másolatot is készíthetünk egy fájlról.}
+    \item{Copy on write: Csak akkor másolja le ténylegesen, ha módosítjuk.}
+    \item{Race condition: Két eseménynak egymáshoz képest speciálisan időzítve kell lefutnia a hibához.}
+    \item{Két thread-et futtatunk:}
+      \begin{itemize}
+        \item{Az egyikben az \texttt{madvice()} függvénnyel azt mondjuk a kernelnek, hogy az adott területet nem fogjuk a közeljövőben használni.}
+        \item{A másikban a saját memóriát leképező \texttt{/proc/self/mem} azon részére írunk, ahova a támadott fájlt map-eltük.}
+      \end{itemize}
+    \item{Nagyon sok próbálkozás után egy bizonyos ponton a kernel ,,elrontja'' az írás és a másolás sorrendjét és felülíródik a megnyitt fájl.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{CVE-2017-5754, Meltdown (operációs rendszertől független)}
+\end{frame}
+
+\begin{frame}{CVE-2017-0199, Office arbitrary code execution}
+\end{frame}
+
+\begin{frame}{CVE-2017-0144, Eternal Blue}
+\end{frame}
+
+\begin{frame}{Slow loris (CVE-2007-6750 és sok egyéb)}
+\end{frame}
+
+\begin{frame}{CVE-2020-0796 aka CoronaBlue aka SMBGhost}
+\end{frame}
+
+\end{document}
