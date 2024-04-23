@@ -231,8 +231,159 @@ Scale = 1
   \end{itemize}
 \end{frame}
 
-\begin{frame}{CVE-2017-5754, Meltdown (operációs rendszertől független)}
+\begin{frame}{CVE-2017-5754 (Meltdown) és CVE-2017-5753 / CVE-2017-5715 (Spectre)}
+  \begin{itemize}
+    \item{Operációs rendszertől független hardveres sebezhetőségek.}
+    \item{Sebezhető a Pentium-II-től a 8. generációs Core processzorokig lényegében minden Intel CPU, ezek AMD megfelelői, a modern ARM architektúrák és potenciálisan egyéb CPU-k.}
+    \item{Mecanizmus: Race condition, sidechannel attack, timing attack.}
+    \item{Következmény: Elvileg nem hozzáférhető memóriaterületek olvasása (például kriptográfiai kulcsok, jelszavak, személyes adatok stb.).}
+  \end{itemize}
 \end{frame}
+
+\begin{frame}{A modern CPU-k sebességének egyik kulcsa}
+  \begin{block}{Pipelining}
+    \begin{itemize}
+      \item{Az utasítások végrehajtását az órajel vezérli.}
+      \item{Naiv megközelítés: 1 órajel alatt 1 utasítás.}
+      \item{Az utasítások azonban több lépésből állnak (például: betöltés, dekódolás, végrehajtás).}
+      \item{Pipelining: Amíg az egyik utasítást végrehajtja a CPU, a következőt már dekódolja, a rákövetkezőt már betölti.}
+      \item{Feltétel: Tudni kell, hogy melyik utasítás következik. Elágazásoknál ez nem egyértelmű.}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Az elágazás problémájának megoldása}
+    \begin{itemize}
+      \item{Megvárjuk, amíg kiderül, merre folytatódik a program futása}
+      \item{Vagy megpróbáljuk megjósolni (branch prediction)}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Branch prediction és speculatíve execution}
+  \begin{block}{Branch prediction}
+    \begin{itemize}
+      \item{A CPU megjósolja, hogy egy elágazás merre fog folytatódni.}
+      \item{Stratégiák:}
+        \begin{itemize}
+          \item{Mindig az ugrást választja}
+          \item{Mindig a nem ugrást választja}
+          \item{Azt az ágat választja, ami az előző alkalommal, vagy előző alkalmakkor is végrehajtódott}
+        \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Speculative execution}
+    \begin{itemize}
+      \item{A CPU bizonyos, \textbf{valószínűleg szükséges} utasításokat \textbf{előre} végrehajt.}
+      \item{Ha ténylegesen végre kellett hajtania az utasításokat, akkor időt spórolt.}
+      \item{Ha mégsem kellett volna végrehajtani, akkor vissza kell csinálni a tévesen végrehajtott műveletet.}
+      %\item{A speculatíve execution nyilván branch prediction-nel együtt használatos.}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{A cache memória}
+  \begin{itemize}
+    \item{Adott időben egy folyamat a memóriának csak egy kis részét használja (lokalitás).}
+    \item{A memória elérését a cache gyorsítja.}
+    \item{Egy adott memóriarekesz első elérésekor a kérés a memóriából kerül kiszolgálásra és az adat beíródik a cache-be is.}
+    \item{Az újabb hivatkozáskor már a sokkal gyorsabb cache-ből lehet kiolvasni az adatot.}
+    \item{A cache a memóriához képest nagyságrendekkel kisebb és gyorsabb.}
+    \item{A cache általában az LRU (Last Recently Used) algoritmust használja.}
+    \item{A cache általában lap alapú, illetve a memórialapozást is gyorsíthatja. Így egy byte beolvasása annak egy lapnyi körnezetét is gyorsítja.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{A sebezhetőség két építőeleme}
+  \begin{block}{A branch prediction szándékos félrevezetése}
+    \begin{itemize}
+      \item{A branch prediction működése szándékosan befolyásolható, vagy megjósolható.}
+      \item{Könnyen készíthető olyan elágazás, amit nagy valószínűséggel rosszul fog jósolni a CPU.}
+      \item{A branch prediction sok esetben tanítható is.}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Kétszeresen indirekt címzés}
+    \texttt{y = a[b[x]]}
+    \begin{itemize}
+      \item{\texttt{b} egy tömb, aminek az \texttt{y}-adik elemét kiolvassuk.}
+%      \item{Az \texttt{a} tömböt ezzel az értékkel indexeljük.}
+%      \item{Az \texttt{a} tömbhöz van hozzáférési jogunk, a \texttt{b} tömbhöz nincs.}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{A támadás menete}
+  \texttt{if(x < 10)}
+
+  \texttt{\qquad y = a[b[x]]}
+ 
+  \bigskip
+
+  \begin{itemize}
+    \item{Az \texttt{a} tömbhöz van hozzáférési jogunk.}
+    \item{A \texttt{b} tömb elejéhez van hozzáférési jogunk, a végéhez nincs.}
+    \item{Kis értékű \texttt{x}-re a kiolvasás sikeres. Ezekkel tanítjuk a branch prediction-t.}
+    \item{Nagy \texttt{x} esetén az eredmény: segmentation fault.}
+  \end{itemize}
+
+  \bigskip
+
+  Azonban az elágazás igaz ága spekulatíven lefutott, kiolvasva a nem hozzáférhető területet. Persze mivel
+  a feltétel nem teljesült, a processzor visszaállította az eredeti állapotot.
+
+  \begin{alertblock}{}
+    Kivéve a cache-t! Most az \texttt{a} tömb egyik eleme benne van a cache-ben, tehát gyorsabban
+    kiolvasható.
+  \end{alertblock}
+
+\end{frame}
+
+\begin{frame}{Néhány további részlet}
+  \begin{block}{A módszer tulajdonságai}
+    \begin{itemize}
+      \item{Folyamatok egymáshoz képesti lefutásának hibáját használjuk ki, így ez egy \textbf{race condition attack}.}
+      \item{Egy olyan csatornán keresztül lehet információhoz jutni, ami nem kötődik konkrétan
+        a támadott rendszerhez, szoftverhez, protokollhoz, tehát ez egy \textbf{side-channel attack}.}
+      \item{Magát az adatot időzítés segítségével olvassuk ki, így ez egy \textbf{timing attack}.}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Egyéb kiegészítések}
+    \begin{itemize}
+      \item{Ez így leírt módszer csak a támadás elvét mutatja be, valójában sok konkrét sebezhetőség és támadás létezik.}
+      \item{A bemutatott kódrészlet például figyelmen kívül hagyja a lapméretet.}
+%      \item{Mivel a cache-ben levő és a nem cache-ben }
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Védekezés a Meltdown / Spectre típusú sebezhetőségekkel szemben}
+  \begin{itemize}
+    \item{Elvileg teljeskörű javítás csak az érintett CPU cseréjével lehetséges (9. gen. Core CPU-k már védettek).}
+    \item{Szoftveres javítás: \textbf{mitigation} (enyhítés, csillapítás), valójában nem }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{DoS / DDoS típusú támadások}
+
+\end{frame}
+
+\begin{frame}{Slow loris (CVE-2007-6750 és sok egyéb)}
+  \begin{block}{Összesítés}
+  \begin{itemize}
+    \item{DoS (Denial of Service) típusú támadás webszerverek ellen.}
+    \item{Számos webszerver verzió érintett.}
+    \item{Inkább konfigurációs jellegű probléma.}
+  \end{itemize}
+  \end{block}
+
+  \begin{block}{Működése}
+  \end{block}
+
+  
+
+\end{frame}
+
 
 \begin{frame}{CVE-2017-0199, Office arbitrary code execution}
 \end{frame}
@@ -240,10 +391,139 @@ Scale = 1
 \begin{frame}{CVE-2017-0144, Eternal Blue}
 \end{frame}
 
-\begin{frame}{Slow loris (CVE-2007-6750 és sok egyéb)}
-\end{frame}
-
 \begin{frame}{CVE-2020-0796 aka CoronaBlue aka SMBGhost}
 \end{frame}
+
+\begin{frame}{CVE-2023-3269, StackRot}
+\end{frame}
+
+\begin{frame}{WiFi routerek jelszavainak megjósolhatóságára vonatkozó sebezhetőségek}
+  \begin{itemize}
+    \item{A hardver eszközök általában nagy sorozatban készülnek. Egy típuson belül azonosnak tekinthetőek.}
+    \item{De mi van, ha mégis különbözniük kell?}
+      \begin{itemize}
+        \item{MAC cím}
+        \item{Egyedi jelszó}
+        \item{Egyéb egyedi azonosító}
+      \end{itemize}
+    \item{A MAC cím egyediségére vannak jól bevált módszerek (maszk ROM)}
+    \item{A router háttértára flash memória. Egy firmware frissítés az itt levő jelszót törölné.}
+    \item{Ötlet: Származtassuk a jelszót valamilyen egyébként is eltárolt adatból. A WiFi SSID-jét hasonlóképpen.}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{WiFi routerek jelszavainak megjósolhatóságára vonatkozó sebezhetőségek}
+  \begin{itemize}
+    \item{Sebezhetőség:}
+      \begin{itemize}
+        \item{Ha ismerjük a generátor adatot, kiszámíthatjuk a generált adatokat.}
+        \item{A generált adatok között is összefüggés lehet.}
+      \end{itemize}
+    \item{Két példa:}
+  \begin{itemize}
+    \item{CVE-2023-47352: Technicolor TC8715D routerek esetén a támadó az SSID és a BSSID (router MAC címe) alapján megjósolhatja a WPA2 jelszót.}
+    \item{CVE: N/A, UBEE EVW3226 routerek esetében lényegében ugyanez a sebezhetőségtípus}
+    \item{Mindkét router alapértelmezett jelszava admin/admin; az adminisztratív felület elérhető WiFi-ről is}
+  \end{itemize}
+\item{Megoldási lehetőségek:}
+  \begin{itemize}
+    \item{Magasabb elvárások a gyártóval kapcsolatban}
+    \item{Ne bízzunk az alapértelmezett jelszavakban!}
+  \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Authentication bypass típusú sebezhetőségek}
+  \begin{itemize}
+    \item{Általánosan: A webfelületek nem ellenőrzik minden esetben a felhasználó privilégiumait, azonosságát}
+    \item{Példa: Az adminisztratív felületre egy login oldal irányít át; ott már további ellenőrzés nem történik}
+    \item{Huawei HG866 Authentication Bypass, CVE: N/A}
+    \item{}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{CVE-2023-2598, Linux IO uring memory out of bounds read/write}
+  \begin{block}{Összefoglaló}
+    \begin{itemize}
+      \item{CVE-2023-2598}
+      \item{Sebezhető szoftver: Linux kernel 6.3-rc1 - 6.4-rc1 (utóbbiban javítva)}
+      \item{Mechanizmus: Memory corruption, out of bounds r/w}
+      \item{Következmény: Memória szivárgás, privilégiumszint növelés, tetszőleges kódvégrehajtás}
+      \item{\href{https://anatomic.rip/cve-2023-2598/}{https://anatomic.rip/cve-2023-2598/}}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{IO uring}
+  \begin{block}{Rendszerhívások}
+    \begin{itemize}
+      \item{Az operációs rendszer szolgáltatásait adó API}
+      \item{Jelentős részük valamilyen IO művelet}
+      \item{Például fájlműveletek, hálózati kommunikáció}
+      \item{A rendszer hívás overheaddel jár}
+    \end{itemize}
+  \end{block}
+  
+  \begin{block}{IO uring}
+    \begin{itemize}
+      \item{Az IO uring megoldás a rendszerhívások által kialakuló overheadet csökkenti}
+      \item{Aszinkron működés: nem blokkol}
+      \item{Egy körpufferben kell átadni a szükséges rendszerhívásokat, azok paramétereivel}
+      \item{A probléma a memóriapufferek átadásánál és használatánál lép fel}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Néhány szó a Linux memóriaszervezéséről}
+  \begin{itemize}
+    \item{Lapszervezés: 4 kByte méretű lapokkal}
+    \item{A lapszervezés megakadályozza a külső tördelődést, viszont a folytonos területek mégis speciálisan vannak kezelve}
+      \begin{itemize}
+        \item{Fej (head) lap}
+        \item{Farok (tail) lapok}
+      \end{itemize}
+    \item{Folio-k (ívek)}
+      \begin{itemize}
+        \item{Az összetett lapok kezelésére használják}
+        \item{Egyszerű lap esetén maga a lap}
+        \item{Összetett lap esetén a fejlap}
+        \item{Semmiképp nem lehet faroklap}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{A hiba}
+  \begin{block}{A virtuális memória}
+    \begin{itemize}
+      \item{A virtuális memória lényege, hogy a logikai és fizikai memória között leképezést ad.}
+      \item{Egy logikai memórialaphoz egy fizikai lapot lehet rendelni}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{A hiba forrása}
+    \begin{itemize}
+      \item{Ha az IO uring-nek olyan puffer van átadva, ahol egy folytonos logikai terület mindegyik lapjához ugyanaz a fizikai lap van rendelve, akkor a kód elrontja a számolást és az 1 db fizikai lap után következőket is használni fogja}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+%https://github.com/Snoopy-Sec/Localroot-ALL-CVE/tree/master/2023/CVE-2023-3269
+%StackRot (CVE-2023-3269): Linux kernel privilege escalation vulnerability
+
+%Heartbleed CVE-2014-0160
+%https://heartbleed.com/
+
+%Log4j
+%https://en.wikipedia.org/wiki/Log4j
+%https://nvd.nist.gov/vuln/detail/CVE-2021-44228 CVE-2021-44228
+
+%Router privilege escalation
+%https://the-infosec.com/2017/03/20/huawei-hg8245h-router-privilege-escalatio/
+
+%Kereso: https://www.shodan.io/search?query=port%3A80+country%3Ahu+org%3A%22DIGI+Tavkozlesi+es+Szolgaltato+Kft.%22
+
+%https://hup.hu/cikkek/20180608/a_vpnfilter_nagy_szamu_routert_fertozott_meg_vilagszerte
+%https://www.exploit-db.com/exploits/19185
+%Auth bypass
 
 \end{document}
