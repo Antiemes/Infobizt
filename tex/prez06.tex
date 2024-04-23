@@ -1,0 +1,211 @@
+\documentclass[12 pt]{beamer}
+\usetheme[
+  bullet=circle,		% Other option: square
+  bigpagenumber,		% circled page number on lower right
+  topline=true,			% colored bar at the top of the frame 
+  shadow=false,			% Shading for beamer blocks
+  watermark=BG_lower,	% png file for the watermark
+]{Flip}
+
+
+\newcommand{\titleimage}{title}			% Custom title 
+\newcommand{\tanedo}{tanedolight}		% Custom author name
+\newcommand{\CMSSMDM}{CMSSMDMlight.png}	% light background plot
+
+
+%%%%%%%%%%
+% FONTS %
+%%%%%%%%%%
+
+\usepackage[T1]{fontenc}
+%\usepackage{lmodern}		
+%\usepackage{sfmath}		% Sans Serif Math, off by default
+
+%% Protects fonts from Beamer screwing with them
+%% http://tex.stackexchange.com/questions/10488/force-computer-modern-in-math-mode
+\usefonttheme{professionalfonts}
+
+
+\usepackage[no-math]{fontspec}		
+
+%\defaultfontfeatures{Mapping=tex-text}	% This seems to be important for mapping glyphs properly
+
+\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+\usepackage{mathspec}
+\usepackage{graphicx}
+%\usepackage{mathrsfs} 			% For Weinberg-esque letters
+\usepackage{cancel}				% For "SUSY-breaking" symbol
+\usepackage{slashed}            % for slashed characters in math mode
+%\usepackage{bbm}                % for \mathbbm{1} (unit matrix)
+\usepackage{amsthm}				% For theorem environment
+\usepackage{multirow}			% For multi row cells in table
+\usepackage{arydshln} 			% For dashed lines in arrays and tables
+\usepackage{tikzfeynman}		% For Feynman diagrams
+% \usepackage{subfig}           % for sub figures
+% \usepackage{young}			% For Young Tableaux
+% \usepackage{xspace}			% For spacing after commands
+% \usepackage{wrapfig}			% for Text wrap around figures
+% \usepackage{framed}
+
+\usepackage{setspace}
+
+\setsansfont{calibri}[ 
+Extension = .ttf,
+UprightFont = *,
+BoldFont = *b,
+ItalicFont = *i,
+Scale = 1
+]
+
+\setmathfont(Digits,Latin,Greek){SitkaI.ttc}
+
+\graphicspath{{images/}}	% Put all images in this directory. Avoids clutter.
+
+
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{mindmap,trees}	% For mind map
+\usetikzlibrary{arrows,positioning,calc}
+\usetikzlibrary{shapes}
+% http://www.texample.net/tikz/examples/computer-science-mindmap/
+
+
+% SOME COMMANDS THAT I FIND HANDY
+% \renewcommand{\tilde}{\widetilde} % dinky tildes look silly, dosn't work with fontspec
+\newcommand{\comment}[1]{\textcolor{comment}{\footnotesize{#1}\normalsize}} % comment mild
+\newcommand{\Comment}[1]{\textcolor{Comment}{\footnotesize{#1}\normalsize}} % comment bold
+\newcommand{\COMMENT}[1]{\textcolor{COMMENT}{\footnotesize{#1}\normalsize}} % comment crazy bold
+\newcommand{\Alert}[1]{\textcolor{Alert}{#1}} % louder alert
+\newcommand{\ALERT}[1]{\textcolor{ALERT}{#1}} % loudest alert
+%% "\alert" is already a beamer pre-defined
+
+
+
+\author{}
+\title{Informatikai Rendszerek Biztonságtechnikája}
+\institute{}
+\date{}
+
+
+
+\begin{document}
+
+%% To use external nodes; http://www.texample.net/tikz/examples/beamer-arrows/
+\tikzstyle{every picture}+=[remember picture]
+
+{
+  \setbeamertemplate{sidebar right}{\llap{\includegraphics[width=\paperwidth,height=\paperheight]{backgnd}}}
+
+  \begin{frame}[c]
+    \begin{center}
+      % \includegraphics[width=7cm]{WarpedPenguinsReturn}
+
+      \Large
+      \textbf{Információs rendszerek}
+
+      \textbf{biztonságtechnikája}
+
+      \qquad
+
+      Social engineering
+
+      \qquad
+
+      \textit{Vakulya Gergely}
+
+    \end{center}
+  \end{frame}
+}
+
+  %------------------------------------------------
+
+\begin{frame}{A social engineering}
+  \begin{itemize}
+    \item{Az emberi tényező kihasználható tulajdonságaira építő támadási forma}
+    \item{Az emberek befolyásolására, manipulálására alapoz}
+    \item{Lehetséges célok:}
+      \begin{itemize}
+        \item{Bizalmas információk megszerzése}
+        \item{Szándékos károkozás}
+      \end{itemize}
+    \item{\textit{A social engineering a befolyásolás és a rábeszélés eszközével megtéveszti az embereket, manipulálja, vagy meggyőzi őket, hogy a social engineer tényleg az, akinek mondja magát. Ennek eredményeként a social engineer – technológia használatával vagy anélkül – képes az embereket információszerzés érdekében kihasználni.} -- Kevin Mitnick}
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Miért hatékony a social engineering?}
+  \begin{itemize}
+    \item{A munkavállaló a legtöbb védendő értékhez közvetlenül hozzáférheti}
+      \begin{itemize}
+        \item{Hardver}
+        \item{Szoftver}
+        \item{Adatok (például fejlesztési, üzleti, kontakt stb.)}
+      \end{itemize}
+    \item{Ez a fajta támadás nem a (fizikai, vagy logikai) biztonsági
+      rendszert, hanem a humán erőforrást támadja.}
+    \item{A munkavállalók nem tulajdonítanak kellő jelentőséget a rájuk
+      bizott adatoknak. Önmagukban, kontextus nélkül nem értelmezhetők.}
+      \begin{itemize}
+        \item{Felhasználónév jelszó nélkül}
+        \item{Jelszó felhasználónév nélkül}
+        \item{Akár felhasználónév és jelszó együtt, amivel \textit{úgysem tud mit kezdeni}}
+        \item{Születési idők, becenevek, hobbik, gyerekek, házikedvencek nevei.}
+        \item{Infrastruktúrára vonatkozó adatok (gépek nevei, számozási sémák stb.)}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Social engineering módszerek}
+  Az áldozat megtévesztéséhez, a ráhatáshoz nincsen szükség számítógép használatára.
+
+  \begin{itemize}
+    \item{Telefonhívás: A partner nehezen tudja a támadót azonosítani}
+      \begin{itemize}
+        \item{Segítség kérése, főleg ha sürgős}
+        \item{Felettesnek adja ki magát}
+        \item{Látszólag lényegtelen dolgokat kérdez statisztikai céllal}
+        \item{Adategyeztetés}
+      \end{itemize}
+    \item{Személyes behatolás: Bizonyos feltételek esetén (nem túl kicsi vállalat, de nincs belépőkártya, vagy kód)}
+      \begin{itemize}
+        \item{Új alkalmazott}
+        \item{Látogató}
+        \item{Ügyfél}
+        \item{Eltévedt}
+        \item{Karbantartó}
+        \item{Valakihez jött}
+      \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Két klasszikus példa}
+Piggybacking
+
+  \begin{itemize}
+    \item{Valakihez csatlakozva hatol be a támadó.}
+    \item{Pl. otthon hagyott belépőkártya, vagy épp nem becsukódó ajtó}
+  \end{itemize}
+
+Tailgating
+
+  \begin{itemize}
+    \item{A támadó egy csoporthoz csatlakozik, majd leválik}
+  \end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Esettanulmány: CVE-2024-3094 (XZ-Utils SSH backdoor}
+\end{frame}
+
+%berner, würth
+
+\end{document}
