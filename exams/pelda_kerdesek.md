@@ -29,4 +29,31 @@ működési módot, ami véletlen elérésű nagy méretű adat (nagy fájl, eg�
 - Milyen módszert használnak a stack buffer overflow típusú exploitok a program futásának átirányítására?
 - Mit jelent, ha egy program 'setuid root' jogosultságú? Milyen potenciális veszélyt ad ez?
 - Miért nem tartalmazza a PATH környezeti változó az aktuális könyvtárat?
+- Mit jelent a privilégiumszint növelés (privilege escalation)?
+- Mit jelent a race condition?
+- Mit jelent a side channel attack?
+- Mit jelent a mitigation kifejezés?
+- Milyen hibákat eredhetnek a véletlenszám-generátorok gyengeségeiből, illetve azok nem megfelelő használatából?
+
+## Tűzfalak
+
+- Adott egy kiszolgáló, amelynek 22-es portján egy SSH szolgáltatás fut. A következő 4 beállítás közül melyik fogja megakadályozni, hogy egy külső eszközről SSH kapcsolatot létesítsünk a kiszolgálóval? Indokolja!
+  * Az INPUT láncban elhelyezett tiltás, ahol a protokoll TCP és a forrás (source) port 22
+  * Az INPUT láncban elhelyezett tiltás, ahol a protokoll TCP és a cél (destination) port 22
+  * Az OUTPUT láncban elhelyezett tiltás, ahol a protokoll TCP és a forrás (source) port 22
+  * Az OUTPUT láncban elhelyezett tiltás, ahol a protokoll TCP és a cél (destination) port 22
+- Mit jelent a tűzfal beállításánál a POLICY?
+- Mit jelentenek az ACCEPT és a DROP akciók?
+- Hogyan működik a port knocking?
+
+## Backup és helyreállítás
+
+- Mik a fő különbségek az SCP és az RSYNC között?
+- Mit jelent a chroot? Mire tudjuk használni?
+- Mire használható a dd parancs? Mik a fő különbségek a dd és a partclone között?
+
+## Egyéb általános kérdések
+
+- Mit jelnt a social engineering? Írjon néhány példát!
+- Mit jelent a security by obscurity kifejezés?
 
