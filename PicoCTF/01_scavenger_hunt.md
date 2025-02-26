@@ -28,3 +28,13 @@ beállításokat tároló fájlok.
 `.htaccess`
 </details>
 
+Bizonyos szerkesztő programok, vagy egyéb szoftverek is hagyhatnak maguk után olyan fájlokat,
+amiknek a neve kitalálható. Ezek lehetnek például thumbnailek, vagy metaadatok. Itt a segítség Mac-es környezetre utal. Vajon milyen fájl lehet itt?
+
+
+<details>
+<summary>Megfejtés</summary>
+
+`.DS_Store`
+</details>
+
