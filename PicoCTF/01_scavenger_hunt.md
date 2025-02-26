@@ -12,6 +12,7 @@ A leggyakrabban szereplő ilyen fájl a webrobotoknak ad utasításokat (amiket 
 
 <details>
 <summary>Megfejtés</summary>
+
 ```
 robots.txt
 ```
@@ -25,6 +26,7 @@ beállításokat tároló fájlok.
 
 <details>
 <summary>Megfejtés</summary>
+
 ```
 .htaccess
 ```
