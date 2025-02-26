@@ -13,9 +13,7 @@ A leggyakrabban szereplő ilyen fájl a webrobotoknak ad utasításokat (amiket 
 <details>
 <summary>Megfejtés</summary>
 
-```
-robots.txt
-```
+`robots.txt`
 </details>
 
 Bizonyos webszerverek bizonyos beállításokat a kiszolgált fájlok mellett tárolni. Ezek
