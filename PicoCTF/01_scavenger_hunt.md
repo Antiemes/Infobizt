@@ -25,8 +25,6 @@ beállításokat tároló fájlok.
 <details>
 <summary>Megfejtés</summary>
 
-```
-.htaccess
-```
+`.htaccess`
 </details>
 
