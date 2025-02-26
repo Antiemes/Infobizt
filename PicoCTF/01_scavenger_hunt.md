@@ -1,24 +1,3 @@
-a[href="#spoiler"] {
-  text-decoration: none !important;
-  cursor: default;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #FFF8DC;
-  border-left: 2px solid #ffeb8e;
-  display: inline-block;
-}
-a[href="#spoiler"]::after {
-  content: attr(title);
-  color: #FFF8DC;
-  padding: 0 0.5em;
-}
-a[href="#spoiler"]:hover::after,
-a[href="#spoiler"]:active::after {
-  cursor: auto;
-  color: black;
-  transition: color .5s ease-in-out;
-}
-
 # Scavenger Hunt
 
 Ez a példa azt mutatja be, hogy a webes tartalmak mögött nyílt szöveges elemek működnek,
@@ -31,7 +10,10 @@ viszont ha tudjuk a fájlok nevét, akkor le tudjuk őket kérni.
 
 A leggyakrabban szereplő ilyen fájl a webrobotoknak ad utasításokat (amiket azok nem feltétlenül tartanak be.) Derítsük ki, hogy mi ennek a neve!
 
->! `robots.txt`
+<details>
+<summary>Megfejtés</summary>
+`robots.txt`
+</details>
 
 Bizonyos webszerverek bizonyos beállításokat a kiszolgált fájlok mellett tárolni. Ezek
 a fájlok jó beállítások esetén nem olvashatóak bárki számára, viszont ezek korrekt védelméről
@@ -39,8 +21,8 @@ esetleg megfeledkezhet a webszerver üzemeltetője. Az utalás azt mondja, hogy 
 Apache webszerverrel van dolgunk. Derítsük ki, hogy ott milyen néven lehetnek
 beállításokat tároló fájlok.
 
->! .htaccess
+<details>
+<summary>Megfejtés</summary>
+`.htaccess`
+</details>
 
-<p>
-  <a href="#spoiler" title="Spoiler Filled Text"></a>
-</p>
