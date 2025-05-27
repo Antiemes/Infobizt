@@ -57,7 +57,7 @@ Ha a lánc egyik szabálya sem volt illeszkedő és terminális akcióval rendel
 
 Az említett akciók működése a következő:
 * Az *ACCEPT* elfogadja a vizsgált csomagot.
-* A *REJECT* elutasíŧja a vizsgált csomagot és erről egy hálózati üzenetet küld vissza a csomag feladójának.
+* A *REJECT* elutasítja a vizsgált csomagot és erről egy hálózati üzenetet küld vissza a csomag feladójának.
 
 A REJECT akció által visszaadott üzenet arról tájékoztatja a másik oldalt, hogy az adott szolgáltatás létezik,
 de a hozzáférést tűzfal szűri. Ez egy támadónak hasznos információ lehet. Ennek kivédésére létezik a harmadik,
