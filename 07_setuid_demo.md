@@ -91,7 +91,7 @@ A prompt végén most nem `$` jel áll, hanem `#`, ami jelzi a `root` jogunkat, 
 
 Most végezzük el ugyanezt a home-unkban is. Ide a `cd` paranccsal tudunk visszalépni. Láthatjuk, hogy itt ugyanez nem működik.
 
-A kérdésre a megoldás a telepíŧéskor kiválasztott `nosuid` opcióban rejlik. Ez ugyanis nem engedélyezi a `setuid root` mechanizmust. A `nosuid` opciórót a `mount` paranccsal tudjuk ellenőrizni.
+A kérdésre a megoldás a telepítéskor kiválasztott `nosuid` opcióban rejlik. Ez ugyanis nem engedélyezi a `setuid root` mechanizmust. A `nosuid` opciórót a `mount` paranccsal tudjuk ellenőrizni.
 
 ## Setuid root programok
 

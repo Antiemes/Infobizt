@@ -11,7 +11,7 @@ mkdir teszt
 cd teszt
 ```
 
-Mcedit segíŧségével készítsünk két szöveges fájlt. Az egyikben valami fontos legyen, mondjuk egy korszakalkotó ötletünk (`otlet.txt`), egy másik fájlban pedig valami kevésbé fontos tartalom, mondjuk a bableves receptje (`bableves.txt`).
+Mcedit segítségével készítsünk két szöveges fájlt. Az egyikben valami fontos legyen, mondjuk egy korszakalkotó ötletünk (`otlet.txt`), egy másik fájlban pedig valami kevésbé fontos tartalom, mondjuk a bableves receptje (`bableves.txt`).
 
 ```bash
 mcedit otlet.txt
