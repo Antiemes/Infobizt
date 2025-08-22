@@ -122,19 +122,19 @@ Scale = 1
 
   %------------------------------------------------
 
-\begin{frame}{Hash mint adatstruktóra}
+\begin{frame}{Hash mint adatstruktúra}
     \begin{itemize}
       \item{A hash adatszerkezet lényege, hogy elemeket egy $k$ db rekeszt tartalmazó tárolóban elhelyezzünk úgy, hogy azokhoz azonnal (keresés nélkül) hozzáférjünk.}
       \item{Ehhez minden elem értéke alapján egy bélyeget (hash-t) generáljunk. Ez adja a rekesz sorszámát.}
       \item{Célok:}
         \begin{itemize}
-          \item{A tárolni kívánt elemszámhoz minél kisebb ($k$ szmú) rekesz kelljen.}
+          \item{A tárolni kívánt elemszámhoz minél kisebb ($k$ számú) rekesz kelljen.}
           \item{Ne kerüljön egy rekeszbe egynél több elem (kerüljük el a \textbf{hash ütközést}).}
         \end{itemize}
       \item{Számos módszer született (például osztásos, szorzásos, Fibonacci hasítás)}
       \item{Az adott célra használhatunk saját algoritmust is.}
       \item{A hash függvény $k$ rekeszhez egy $\lceil log_{2}(k) \rceil$ bites számot rendel.}
-      \item{Akár a tárolandó adat első byte-ja is használható hasz-ként.}
+      \item{Akár a tárolandó adat első byte-ja is használható hash-ként.}
     \end{itemize}
 \end{frame}
 
@@ -226,7 +226,7 @@ Scale = 1
 \begin{frame}{A születésnap támadás kihasználása}
   \begin{itemize}
     \item{Tegyük fel, hogy egy üzleti partnerrel szeretnénk szerződést kötni úgy, hogy mi lényegesen jobban járjunk, mint partnerünk.}
-    \item{Elkészítünk egy ,,fair'' szerződésből $2^\frac{2}{2}$ kinézetre azonos, de bit szinten különböző példányt, illetve egy ,,kizsákmányoló'' verzióból is ugyanennyit.}
+    \item{Elkészítünk egy ,,fair'' szerződésből $2^\frac{n}{2}$ kinézetre azonos, de bit szinten különböző példányt, illetve egy ,,kizsákmányoló'' verzióból is ugyanennyit.}
     \item{Keresünk egy olyan párt, a ,,fair'' és a ,,kizsákmányoló'' verzió hash-e azonos.}
     \item{Elküldjük a ,,fair'' verziót, valamint annak hash-ét partnerünknek.}
     \item{Elküldjük a ,,kizsákmányoló'' verziót annak (megegyező) hash-ével az ügyvédünknek.}
