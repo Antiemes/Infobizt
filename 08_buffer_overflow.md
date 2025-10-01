@@ -339,7 +339,7 @@ A következő kérdés az, hogy egyáltalán milyen kódot érdemes futtatni. A 
 szerepében vagyunk) célja általános esetben egy shell indítása, lehetőleg privilegizált jogokkal,
 de elképzelhetőek más lehetéges támadások is (például a tűzfal, vagy az illető számítógép lekapcsolása).
 Ezekre láthatunk jónéhány példát ezen az oldalon:
-(https://shell-storm.org/shellcode/index.html)[https://shell-storm.org/shellcode/index.html].
+[https://shell-storm.org/shellcode/index.html](https://shell-storm.org/shellcode/index.html).
 
 Innen a `Linux/x86-64 - setuid(0) + execve(/bin/sh)` nevű pont jó lesz a shell indításához. Ennek bináris kódja
 egy kicsit átformázva:
