@@ -8,6 +8,8 @@
 
 [Kriptográfia: Kriptográfiai hash algoritmusok](https://youtu.be/nNIQ1IRc1AQ)
 
+[Kriptográfia: Nyílt kulcsú titkosító algoritmusok](https://youtu.be/1krdKzHhMGI)
+
 ## Gyakorlat
 
 [Debian Linux rendszer telepítése virtuális gépre](01_install.md)
