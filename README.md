@@ -8,7 +8,7 @@
 
 [Kriptográfia: Kriptográfiai hash algoritmusok](https://youtu.be/nNIQ1IRc1AQ)
 
-[Kriptográfia: Nyílt kulcsú titkosító algoritmusok](https://youtu.be/1krdKzHhMGI)
+[Kriptográfia: Nyílt kulcsú titkosító algoritmusok](https://youtu.be/5ekLfwlbP5M)
 
 ## Gyakorlat
 
