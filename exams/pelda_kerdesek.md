@@ -33,7 +33,7 @@ működési módot, ami véletlen elérésű nagy méretű adat (nagy fájl, eg�
 - Mit jelent a race condition?
 - Mit jelent a side channel attack?
 - Mit jelent a mitigation kifejezés?
-- Milyen hibákat eredhetnek a véletlenszám-generátorok gyengeségeiből, illetve azok nem megfelelő használatából?
+- Milyen hibák eredhetnek a véletlenszám-generátorok gyengeségeiből, illetve azok nem megfelelő használatából?
 
 ## Tűzfalak
 
