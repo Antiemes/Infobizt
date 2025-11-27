@@ -10,7 +10,7 @@
 
 [Kriptográfia: Nyílt kulcsú titkosító algoritmusok](https://youtu.be/5ekLfwlbP5M)
 
-[Sebezhetőségek osztályozása](https://www.youtu.be/UlUIS7ARDsw)
+[Sebezhetőségek osztályozása](https://youtu.be/UlUIS7ARDsw)
 
 ## Gyakorlat
 
