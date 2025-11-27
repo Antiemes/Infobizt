@@ -10,6 +10,8 @@
 
 [Kriptográfia: Nyílt kulcsú titkosító algoritmusok](https://youtu.be/5ekLfwlbP5M)
 
+[Sebezhetőségek osztályozása](https://www.youtu.be/UlUIS7ARDsw)
+
 ## Gyakorlat
 
 [Debian Linux rendszer telepítése virtuális gépre](01_install.md)
