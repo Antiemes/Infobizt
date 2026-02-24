@@ -345,6 +345,7 @@ Innen a `Linux/x86-64 - setuid(0) + execve(/bin/sh)` nevű pont jó lesz a shell
 egy kicsit átformázva:
 
 ```
+904831c0
 4831ffb0
 690f0548
 31d248bb
