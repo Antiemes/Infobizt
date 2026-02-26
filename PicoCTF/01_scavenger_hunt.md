@@ -38,3 +38,4 @@ amiknek a neve kitalálható. Ezek lehetnek például thumbnailek, vagy metaadat
 `.DS_Store`
 </details>
 
+
